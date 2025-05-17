@@ -1,0 +1,22 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+
+entity incrementor is
+   port(
+      A : in std_logic_vector(3 downto 0);
+      S : out std_logic_vector(3 downto 0);
+      Carry : out std_logic
+   );
+end incrementor;
+
+architecture data of incrementor is
+begin
+   process(A)
+   variable temp: std_logic_vector(4 downto 0);
+   begin
+      temp := ('0' & A) + "00001";
+      S <= temp(3 downto 0);
+      Carry <= temp(4);
+   end process;
+end data;
