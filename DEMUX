@@ -1,0 +1,18 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity demux_4bit is
+   port(
+        S1, S0 : in std_logic;
+        X      : in std_logic_vector(3 downto 0);
+        D0, D1, D2, D3 : out std_logic_vector(3 downto 0)
+   );
+end demux_4bit;
+
+architecture data of demux_4bit is
+begin 
+   D0 <= X when (S1 = '0' and S0 = '0') else "0000";
+   D1 <= X when (S1 = '0' and S0 = '1') else "0000";
+   D2 <= X when (S1 = '1' and S0 = '0') else "0000";
+   D3 <= X when (S1 = '1' and S0 = '1') else "0000";
+end data;
