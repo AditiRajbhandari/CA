@@ -1,0 +1,15 @@
+library ieee; 
+use ieee.std_logic_1164.all; 
+
+entity enc_4bit is
+   port(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15: in bit; 
+        o0, o1, o2, o3: out bit); 
+end enc_4bit; 
+
+architecture behavior of enc_4bit is
+begin 
+   o0 <= i8 or i9 or i10 or i11 or i12 or i13 or i14 or i15; 
+   o1 <= i4 or i5 or i6 or i7 or i12 or i13 or i14 or i15; 
+   o2 <= i2 or i3 or i6 or i7 or i10 or i11 or i14 or i15; 
+   o3 <= i1 or i3 or i5 or i7 or i9 or i11 or i13 or i15; 
+end behavior;
