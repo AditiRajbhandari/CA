@@ -1,0 +1,30 @@
+library ieee; 
+use ieee.std_logic_1164.all;
+
+entity dec_4bit is
+   port(
+      i0, i1, i2, i3 : in bit;  -- 4-bit input
+      o0, o1, o2, o3, o4, o5, o6, o7, 
+      o8, o9, o10, o11, o12, o13, o14, o15 : out bit -- 16 outputs
+   ); 
+end dec_4bit;
+
+architecture logic of dec_4bit is
+begin 
+   o0  <= (not i0) and (not i1) and (not i2) and (not i3); 
+   o1  <= (not i0) and (not i1) and (not i2) and i3; 
+   o2  <= (not i0) and (not i1) and i2 and (not i3); 
+   o3  <= (not i0) and (not i1) and i2 and i3; 
+   o4  <= (not i0) and i1 and (not i2) and (not i3); 
+   o5  <= (not i0) and i1 and (not i2) and i3; 
+   o6  <= (not i0) and i1 and i2 and (not i3); 
+   o7  <= (not i0) and i1 and i2 and i3; 
+   o8  <= i0 and (not i1) and (not i2) and (not i3); 
+   o9  <= i0 and (not i1) and (not i2) and i3; 
+   o10 <= i0 and (not i1) and i2 and (not i3); 
+   o11 <= i0 and (not i1) and i2 and i3; 
+   o12 <= i0 and i1 and (not i2) and (not i3); 
+   o13 <= i0 and i1 and (not i2) and i3; 
+   o14 <= i0 and i1 and i2 and (not i3); 
+   o15 <= i0 and i1 and i2 and i3; 
+end logic;
