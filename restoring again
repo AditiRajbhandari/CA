@@ -1,0 +1,31 @@
+def restoring_division(dividend, divisor, n):
+    A = 0
+    Q = dividend
+    M = divisor
+
+    for _ in range(n):
+        # Left shift A and Q together
+        A = (A << 1) | ((Q >> (n - 1)) & 1)
+        Q = (Q << 1) & ((1 << n) - 1)
+
+        # Subtract M from A
+        A = A - M
+
+        if A < 0:
+            # Restore A, set Q0 = 0
+            A = A + M
+            Q = Q & ~1
+        else:
+            # Set Q0 = 1
+            Q = Q | 1
+
+    return Q, A
+
+if __name__ == "__main__":
+    dividend = int(input("Enter dividend: "))
+    divisor = int(input("Enter divisor: "))
+    n = int(input("Enter number of bits: "))
+
+    quotient, remainder = restoring_division(dividend, divisor, n)
+    print(f"Quotient: {quotient}")
+    print(f"Remainder: {remainder}")
