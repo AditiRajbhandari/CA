@@ -1,0 +1,80 @@
+def binary_subtraction(A, M, size):
+    """Performs A = A - M using binary subtraction with two's complement."""
+    M_neg = [(1 - bit) for bit in M]  # Two's complement: 1's complement
+    carry = 1
+    
+    # Adding 1 to get the two's complement of M
+    for i in range(size - 1, -1, -1):
+        if M_neg[i] == 0 and carry == 1:
+            M_neg[i] = 1
+            carry = 0
+        elif M_neg[i] == 1 and carry == 1:
+            M_neg[i] = 0
+
+    # A = A - M (A + (-M))
+    carry = 0
+    for i in range(size - 1, -1, -1):
+        sum_ = A[i] + M_neg[i] + carry
+        A[i] = sum_ % 2
+        carry = sum_ // 2
+
+def arithmetic_left_shift(A, Q):
+    """Performs arithmetic left shift on A and Q."""
+    A.pop(0)  # Shift left
+    A.append(Q[0])
+    Q.pop(0)  # Shift left
+    Q.append(0)
+
+def decimal_to_binary(num, size):
+    """Converts decimal number to binary list of given size."""
+    bin_list = [0] * size
+    for i in range(size - 1, -1, -1):
+        bin_list[i] = num % 2
+        num //= 2
+    return bin_list
+
+def binary_to_decimal(bin_list):
+    """Converts binary list to decimal integer."""
+    decimal = 0
+    size = len(bin_list)
+    for i in range(size):
+        decimal += bin_list[i] * (2 ** (size - 1 - i))
+    return decimal
+
+def restoring_division(dividend, divisor, size):
+    """Performs restoring division on given dividend and divisor."""
+    A = [0] * size  # Accumulator
+    Q = decimal_to_binary(dividend, size)  # Dividend
+    M = decimal_to_binary(divisor, size)  # Divisor
+    
+    print(f"Initial A: {''.join(map(str, A))}")
+    print(f"Initial Q: {''.join(map(str, Q))}\n")
+
+    for i in range(size):
+        arithmetic_left_shift(A, Q)
+        binary_subtraction(A, M, size)
+
+        if A[0] == 1:  # If A is negative, restore it and set Q[size-1] = 0
+            binary_subtraction(A, [-m for m in M], size)  # Restore A by adding M
+            Q[-1] = 0
+        else:
+            Q[-1] = 1
+
+        print(f"Step {i+1}: A: {''.join(map(str, A))} | Q: {''.join(map(str, Q))}")
+
+    quotient = binary_to_decimal(Q)
+    remainder = binary_to_decimal(A)
+
+    print(f"\nBinary Quotient: {''.join(map(str, Q))}")
+    print(f"Binary Remainder: {''.join(map(str, A))}")
+    print(f"Decimal Quotient: {quotient}")
+    print(f"Decimal Remainder: {remainder}")
+
+# Taking user input
+dividend = int(input("Enter Dividend: "))
+divisor = int(input("Enter Divisor: "))
+
+if divisor == 0:
+    print("Error! Division by zero is not allowed.")
+else:
+    restoring_division(dividend, divisor, 8)  # Using 8-bit representation
